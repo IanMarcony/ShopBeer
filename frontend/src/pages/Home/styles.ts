@@ -13,7 +13,7 @@ export const Container = styled.div`
 
 export const ListDrinks = styled.div`
   width: 100%;
-  height: 200px;
+  height: 400px;
   display: flex;
   padding: 10px;
 
@@ -30,8 +30,9 @@ export const ListDrinks = styled.div`
     img {
       border-top-left-radius: 4px;
       border-top-right-radius: 4px;
-      /* width: 100%; */
-      object-fit: cover;
+      width: 100%;
+      height: 65%;
+      object-fit: contain;
     }
     section {
       display: flex;
