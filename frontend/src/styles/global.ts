@@ -13,12 +13,25 @@ export default createGlobalStyle`
     color:#000;
     -webkit-font-smoothing:antialiased;
   }
+
+  @media (max-width: 1080px) {
+  html {
+    font-size: 93.75%;
+  }
+}
+
+@media (max-width: 720px) {
+  html {
+    font-size: 87.5%;
+  }
+}
+
   #root{
     padding: 40px 20px;
   }
   body,input, button{
     font-family: 'Roboto', serif;
-    font-size:16px;
+    font-size:1rem;
   }
   h1,h2,h3,h4,h5,h6,strong{
     font-weight:500;
