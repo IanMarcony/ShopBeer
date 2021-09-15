@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import bebidaImg from "../../assets/images/test.jpeg";
 import { FiUpload } from "react-icons/fi";
-import { Container, ListDrinks } from "./styles";
 import ModalImport from "../../components/ModalImport";
 import { useModalImport } from "../../hooks/modal-import";
+import { Container, ListDrinks } from "./styles";
+import ItemBeer from "../../components/ItemBeer";
 
 const standardStyles = {
   content: {
@@ -11,6 +12,8 @@ const standardStyles = {
     height: "14rem",
   },
 };
+
+const array = [1, 2, 3];
 
 const Home: React.FC = () => {
   const { open, toggleModalImport } = useModalImport();
@@ -23,87 +26,17 @@ const Home: React.FC = () => {
             <FiUpload size={20} />
           </button>
         </nav>
+        <h1>Shop beer</h1>
         <ListDrinks>
-          <div>
-            <img src={bebidaImg} alt="Bebida" />
-            <section>
-              <h1>Modelo Negra</h1>
-              <h2>12 Unit - 33oz Bottle</h2>
-              <b>
-                <strong>RD$ 32.00/Unit</strong>
-              </b>
-            </section>
-          </div>
-          <div>
-            <img src={bebidaImg} alt="Bebida" />
-            <section>
-              <h1>Modelo Negra</h1>
-              <h2>12 Unit - 33oz Bottle</h2>
-              <b>
-                <strong>RD$ 32.00/Unit</strong>
-              </b>
-            </section>
-          </div>
-          <div>
-            <img src={bebidaImg} alt="Bebida" />
-            <section>
-              <h1>Modelo Negra</h1>
-              <h2>12 Unit - 33oz Bottle</h2>
-              <b>
-                <strong>RD$ 32.00/Unit</strong>
-              </b>
-            </section>
-          </div>
-          <div>
-            <img src={bebidaImg} alt="Bebida" />
-            <section>
-              <h1>Modelo Negra</h1>
-              <h2>12 Unit - 33oz Bottle</h2>
-              <b>
-                <strong>RD$ 32.00/Unit</strong>
-              </b>
-            </section>
-          </div>
-          <div>
-            <img src={bebidaImg} alt="Bebida" />
-            <section>
-              <h1>Modelo Negra</h1>
-              <h2>12 Unit - 33oz Bottle</h2>
-              <b>
-                <strong>RD$ 32.00/Unit</strong>
-              </b>
-            </section>
-          </div>
-          <div>
-            <img src={bebidaImg} alt="Bebida" />
-            <section>
-              <h1>Modelo Negra</h1>
-              <h2>12 Unit - 33oz Bottle</h2>
-              <b>
-                <strong>RD$ 32.00/Unit</strong>
-              </b>
-            </section>
-          </div>
-          <div>
-            <img src={bebidaImg} alt="Bebida" />
-            <section>
-              <h1>Modelo Negra</h1>
-              <h2>12 Unit - 33oz Bottle</h2>
-              <b>
-                <strong>RD$ 32.00/Unit</strong>
-              </b>
-            </section>
-          </div>
-          <div>
-            <img src={bebidaImg} alt="Bebida" />
-            <section>
-              <h1>Modelo Negra</h1>
-              <h2>12 Unit - 33oz Bottle</h2>
-              <b>
-                <strong>RD$ 32.00/Unit</strong>
-              </b>
-            </section>
-          </div>
+          {array.map((item) => (
+            <ItemBeer
+              key={item}
+              img={bebidaImg}
+              title="Modelo Negra"
+              description="12 Unit - 33oz Bottle"
+              price={32}
+            />
+          ))}
         </ListDrinks>
       </Container>
 

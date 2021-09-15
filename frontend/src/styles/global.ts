@@ -15,25 +15,28 @@ export default createGlobalStyle`
   }
 
   @media (max-width: 1080px) {
-  html {
-    font-size: 93.75%;
+    html {
+      font-size: 93.75%;
+    }
   }
-}
 
-@media (max-width: 720px) {
-  html {
-    font-size: 87.5%;
+  @media (max-width: 720px) {
+    html {
+      font-size: 87.5%;
+    }
   }
-}
 
   #root{
     padding: 40px 20px;
   }
+
   body,input, button{
-    font-family: 'Roboto', serif;
+    font-family: 'Roboto', sans-serif;
     font-size:1rem;
   }
   h1,h2,h3,h4,h5,h6,strong{
+    font-family: 'Roboto', sans-serif;
+
     font-weight:500;
   }
   button,a {
