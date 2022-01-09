@@ -4,46 +4,83 @@ import { useCallback } from "react";
 
 import { Props } from "react-modal";
 import { useModalImport } from "../../hooks/modal-import";
+import api from "../../services/api";
 
 import { Container } from "./styles";
 
 interface FormData {
   title: string;
   description: string;
-  pricing: number;
-  filename: string;
+  value: number;
+  image: File;
 }
 
 const ModalImport: React.FC<Props> = ({ children, ...rest }) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [pricing, setPricing] = useState(0);
+  const [value, setValue] = useState(0);
   const [file, setFile] = useState<FileList | null>({} as FileList);
 
   const { toggleModalImport } = useModalImport();
 
   const handleSubmit = useCallback(
-    (e: FormEvent) => {
+    async (e: FormEvent) => {
       e.preventDefault();
 
       if (file == null) {
-        console.log("Import a file");
+        alert("Import a file");
+        return;
+      }
+      const fileImage = file.item(0);
+
+      if (fileImage === null) {
+        alert("Import a file");
         return;
       }
 
-      const filename = file.item(0)?.name;
+      const filename = fileImage.name;
+
+      const extensionFilename = filename.split(".");
+      if (
+        extensionFilename &&
+        extensionFilename[extensionFilename.length - 1] !== "jpg"
+      ) {
+        if (
+          extensionFilename &&
+          extensionFilename[extensionFilename.length - 1] !== "jpeg"
+        ) {
+          alert("Import a Image");
+          return;
+        }
+      }
+
+      const formData = new FormData();
+
       const data: FormData = {
         title,
         description,
-        pricing,
-        filename: filename || "",
+        value,
+        image: fileImage,
       };
 
-      console.table(data);
+      formData.append("title", data.title);
+      formData.append("description", data.description);
+      formData.append("value", data.value.toString());
+      formData.append("image", data.image);
+
+      const response = await api.post("/drinks", formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+      console.log(response);
+
+      setTitle("");
+      setDescription("");
+      setValue(0);
+      setFile(null);
 
       toggleModalImport();
     },
-    [description, pricing, title, file, toggleModalImport]
+    [description, value, title, file, toggleModalImport]
   );
 
   return (
@@ -66,14 +103,18 @@ const ModalImport: React.FC<Props> = ({ children, ...rest }) => {
         <input
           type="text"
           placeholder="Preço"
-          value={pricing}
+          value={value}
           onChange={(event) =>
-            setPricing(
+            setValue(
               parseInt(event.target.value === "" ? "0" : event.target.value)
             )
           }
         />
-        <input type="file" onChange={(event) => setFile(event.target.files)} />
+        <input
+          type="file"
+          accept="image/jpeg"
+          onChange={(event) => setFile(event.target.files)}
+        />
 
         <button type="submit">Salvar</button>
       </form>

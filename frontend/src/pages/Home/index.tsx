@@ -1,10 +1,10 @@
-import React from "react";
-import bebidaImg from "../../assets/images/test.jpeg";
+import React, { useEffect, useCallback, useState } from "react";
 import { FiUpload } from "react-icons/fi";
 import ModalImport from "../../components/ModalImport";
 import { useModalImport } from "../../hooks/modal-import";
 import { Container, ListDrinks } from "./styles";
 import ItemBeer from "../../components/ItemBeer";
+import api from "../../services/api";
 
 const standardStyles = {
   content: {
@@ -13,10 +13,26 @@ const standardStyles = {
   },
 };
 
-const array = [1, 2, 3];
+interface Drink {
+  id: number;
+  title: string;
+  description: string;
+  value: number;
+  image_url: string;
+}
 
 const Home: React.FC = () => {
   const { open, toggleModalImport } = useModalImport();
+  const [drinksList, setDrinksList] = useState<Drink[]>([]);
+
+  const loadDrinksList = useCallback(async () => {
+    const { data } = await api.get("/drinks");
+    setDrinksList(data);
+  }, []);
+
+  useEffect(() => {
+    loadDrinksList();
+  }, []);
 
   return (
     <>
@@ -28,13 +44,13 @@ const Home: React.FC = () => {
         </nav>
         <h1>Shop beer</h1>
         <ListDrinks>
-          {array.map((item) => (
+          {drinksList.map((item) => (
             <ItemBeer
-              key={item}
-              img={bebidaImg}
-              title="Modelo Negra"
-              description="12 Unit - 33oz Bottle"
-              price={32}
+              key={item.id}
+              img={api.defaults.baseURL + item.image_url}
+              title={item.title}
+              description={item.description}
+              price={item.value}
             />
           ))}
         </ListDrinks>

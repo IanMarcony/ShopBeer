@@ -17,7 +17,7 @@ const ItemBeer: React.FC<ItemBeerProps> = ({
 }) => {
   return (
     <Container>
-      <img src={img} alt="Bebida" />
+      <img src={img} alt={title} />
       <section>
         <h1>{title}</h1>
         <h2>{description}</h2>
