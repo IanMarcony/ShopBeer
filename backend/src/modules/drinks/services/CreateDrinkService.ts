@@ -1,7 +1,6 @@
 import AppError from '@shared/error/AppError';
 import { inject, injectable } from 'tsyringe';
 import Drink from '../infra/typeorm/entities/Drink';
-import ip from 'ip';
 import IDrinksRepository from '../repositories/IDrinksRepository';
 import IStorageProvider from '@shared/container/providers/StorageProvider/models/IStorageProvider';
 
@@ -35,7 +34,6 @@ export default class CreateDrinkService {
       this.storageProvider.deleteFile(filename);
       throw new AppError('Cannot create drink with same title');
     }
-    image_url = 'http://' + ip.address() + ':3333' + image_url;
     const drink = await this.drinksRepository.create({
       title,
       description,

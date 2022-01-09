@@ -22,7 +22,6 @@ export default class DrinksRepository implements IDrinksRepository {
       value,
       image_url,
     });
-    console.log(drink.id);
     return await this.ormRepository.save(drink);
   }
 
