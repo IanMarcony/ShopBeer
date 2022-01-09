@@ -19,7 +19,7 @@ const ModalImport: React.FC<Props> = ({ children, ...rest }) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [value, setValue] = useState(0);
-  const [file, setFile] = useState<FileList | null>({} as FileList);
+  const [file, setFile] = useState<FileList | null>(null);
 
   const { toggleModalImport } = useModalImport();
 
@@ -29,12 +29,14 @@ const ModalImport: React.FC<Props> = ({ children, ...rest }) => {
 
       if (file == null) {
         alert("Import a file");
+        toggleModalImport();
         return;
       }
       const fileImage = file.item(0);
 
       if (fileImage === null) {
         alert("Import a file");
+        toggleModalImport();
         return;
       }
 
