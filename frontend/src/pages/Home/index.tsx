@@ -5,6 +5,7 @@ import { useModalImport } from "../../hooks/modal-import";
 import { Container, ListDrinks } from "./styles";
 import ItemBeer from "../../components/ItemBeer";
 import api from "../../services/api";
+import { useDrinks } from "../../hooks/drinks";
 
 const standardStyles = {
   content: {
@@ -13,22 +14,14 @@ const standardStyles = {
   },
 };
 
-interface Drink {
-  id: number;
-  title: string;
-  description: string;
-  value: number;
-  image_url: string;
-}
-
 const Home: React.FC = () => {
   const { open, toggleModalImport } = useModalImport();
-  const [drinksList, setDrinksList] = useState<Drink[]>([]);
+  const { listDrink, addListDrink } = useDrinks();
 
   const loadDrinksList = useCallback(async () => {
     const { data } = await api.get("/drinks");
-    setDrinksList(data);
-  }, []);
+    addListDrink(data);
+  }, [addListDrink]);
 
   useEffect(() => {
     loadDrinksList();
@@ -44,7 +37,7 @@ const Home: React.FC = () => {
         </nav>
         <h1>Shop beer</h1>
         <ListDrinks>
-          {drinksList.map((item) => (
+          {listDrink.map((item) => (
             <ItemBeer
               key={item.id}
               img={api.defaults.baseURL + item.image_url}

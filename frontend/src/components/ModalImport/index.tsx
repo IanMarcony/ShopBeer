@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useCallback } from "react";
 
 import { Props } from "react-modal";
+import { useDrinks } from "../../hooks/drinks";
 import { useModalImport } from "../../hooks/modal-import";
 import api from "../../services/api";
 
@@ -22,6 +23,7 @@ const ModalImport: React.FC<Props> = ({ children, ...rest }) => {
   const [file, setFile] = useState<FileList | null>(null);
 
   const { toggleModalImport } = useModalImport();
+  const { addDrink } = useDrinks();
 
   const handleSubmit = useCallback(
     async (e: FormEvent) => {
@@ -73,7 +75,7 @@ const ModalImport: React.FC<Props> = ({ children, ...rest }) => {
       const response = await api.post("/drinks", formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
-      console.log(response);
+      console.log(response.data);
 
       setTitle("");
       setDescription("");
@@ -81,8 +83,9 @@ const ModalImport: React.FC<Props> = ({ children, ...rest }) => {
       setFile(null);
 
       toggleModalImport();
+      addDrink(response.data);
     },
-    [description, value, title, file, toggleModalImport]
+    [description, value, title, file, toggleModalImport, addDrink]
   );
 
   return (
